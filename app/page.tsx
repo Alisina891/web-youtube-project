@@ -2,16 +2,7 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 
-interface video {
-  id: {videoId: string} | string;
-   snippet: {
-    title: string;
-    desccription: string;
-    thumbnails: {
-      medium: {url: string};
-    }
-   }
-}
+
 
 const API_KEY = "AIzaSyCC5V7uIYXRkcl36YzQOpPWydclmfbMHIU";
 
