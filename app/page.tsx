@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, use } from "react";
 import Image from "next/image";
 
 
@@ -17,18 +17,23 @@ export default function HomePage() {
   const [videos, setVideos] = useState<Video[]>([]);
   const [selectedVideoId, setSelectedVideoId] = useState<string | null>(null);
   const [query, setQuery] = useState("");
+  const [loading , setIsloading ] = useState(false);
 
   async function fetchTrendingVideos() {
+    setIsloading(true);
     const res = await fetch(
       `https://www.googleapis.com/youtube/v3/videos?part=snippet&chart=mostPopular&regionCode=US&maxResults=10&key=${API_KEY}`
     );
     if (!res.ok) {
       console.error("Failed to fetch YouTube videos");
+      setIsloading(false)
       return;
     }
     const data = await res.json();
+    setIsloading(false)
     setVideos(data.items);
     setSelectedVideoId(data.items[0]?.id); 
+   
   }
 
   async function searchVideos() {
@@ -71,17 +76,19 @@ export default function HomePage() {
       </div>
 
       <div className=" flex  flex-col justify-center items-center md:grid md:grid-cols-2">
-        <div className=" flex w-full justify-center ]">{selectedVideoId && (
+        <div className=" flex w-full justify-center ]">
+          
+          {selectedVideoId && !loading ?(
             <iframe
             className=" w-full max-w-[600px]  aspect-video rounded  shadow-lg max-sm:mt-10  "
             src={`https://www.youtube.com/embed/${selectedVideoId}`}
             allowFullScreen ></iframe>
             
           
-        )}
+        ) : <p className="text-black text-xl mt-10 font-bold h-screen">Loading...</p>}
         
         </div>
-        <div className="grid grid-cols-2 max-sm:gap-4 gap-2 items-center justify-center text-center ">
+        <div className="grid grid-cols-2 max-sm:gap-4 gap-2 items-center justify-center text-center bg-white">
         {videos.slice(0 , 4).map((video) => (
           <div
             key={(video.id as {videoId?: string}).videoId || (video.id as string)}
