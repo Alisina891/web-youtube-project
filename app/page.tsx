@@ -2,21 +2,19 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 
-interface Video {
-  id: {videoId: string} | string;
-   snippet: {
-    title: string;
-    desccription: string;
-    thumbnails: {
-      medium: {url: string};
-    }
-   }
-}
 
 const API_KEY = "AIzaSyCC5V7uIYXRkcl36YzQOpPWydclmfbMHIU";
 
+interface Video {
+  id: {videoId: string} | string;
+  snippet: {
+    title: string;
+    thumbnails: {medium: {url: string} };
+  }
+}
+
 export default function HomePage() {
-  const [videos, setVideos] = useState([]);
+  const [videos, setVideos] = useState<Video[]>([]);
   const [selectedVideoId, setSelectedVideoId] = useState<string | null>(null);
   const [query, setQuery] = useState("");
 
@@ -87,7 +85,7 @@ export default function HomePage() {
           <div
             key={(video.id as {videoId?: string}).videoId || (video.id as string)}
             className="p-4  border rounded shadow cursor-pointer hover:bg-gray-100 transition flex flex-col justify-center items-center "
-            onClick={() => setSelectedVideoId(video.id.videoId|| video.id)} // انتخاب ویدیو
+            onClick={() => setSelectedVideoId((video.id as {videoId?: string}).videoId || (video.id as string))} // انتخاب ویدیو
           >
             
             <Image
