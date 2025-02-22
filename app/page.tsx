@@ -1,5 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
+import Image from "next/image";
+
 
 const API_KEY = "AIzaSyCC5V7uIYXRkcl36YzQOpPWydclmfbMHIU";
 
@@ -78,7 +80,9 @@ export default function HomePage() {
             onClick={() => setSelectedVideoId(video.id.videoId|| video.id)} // انتخاب ویدیو
           >
             
-            <img
+            <Image
+            width={300}
+            height={300}
               src={video.snippet.thumbnails.medium.url}
               alt={video.snippet.title}
               className="rounded mt-2"
