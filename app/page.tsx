@@ -2,6 +2,16 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 
+interface video {
+  id: {videoId: string} | string;
+   snippet: {
+    title: string;
+    desccription: string;
+    thumbnails: {
+      medium: {url: string};
+    }
+   }
+}
 
 const API_KEY = "AIzaSyCC5V7uIYXRkcl36YzQOpPWydclmfbMHIU";
 
@@ -73,9 +83,9 @@ export default function HomePage() {
         
         </div>
         <div className="grid grid-cols-2 max-sm:gap-4 gap-2 items-center justify-center text-center ">
-        {videos.slice(0 , 4).map((video: any) => (
+        {videos.slice(0 , 4).map((video) => (
           <div
-            key={video.id.videoId ||video.id}
+            key={(video.id as {videoId?: string}).videoId || (video.id as string)}
             className="p-4  border rounded shadow cursor-pointer hover:bg-gray-100 transition flex flex-col justify-center items-center "
             onClick={() => setSelectedVideoId(video.id.videoId|| video.id)} // انتخاب ویدیو
           >
