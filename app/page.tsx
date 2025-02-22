@@ -44,6 +44,7 @@ export default function HomePage() {
     const data = await res.json();
     setVideos(data.items);
     setSelectedVideoId(data.items[0]?.id);
+    setQuery("")
   }
 
   useEffect(() => {
